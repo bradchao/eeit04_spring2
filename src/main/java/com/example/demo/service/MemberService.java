@@ -2,7 +2,8 @@ package com.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.controller.MemberController;
+
+import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 
 @Service
@@ -13,6 +14,15 @@ public class MemberService {
 
 	public boolean checkAccount(String account) {
 		return memberRepository.existsByAccount(account);
+	}
+	
+	public String register(Member member) {
+		if (memberRepository.existsByAccount(member.getAccount())) {
+			return "Account 已使用";
+		}
+		
+		memberRepository.save(member);
+		return "註冊成功";
 	}
 	
 }

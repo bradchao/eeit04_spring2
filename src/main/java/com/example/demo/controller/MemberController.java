@@ -32,8 +32,11 @@ public class MemberController {
 	 */
 	@PostMapping("/register")
 	public ResponseEntity<Map<String, String>> register(@RequestBody Member member){
+		
+		String result = memberService.register(member);
+		
 		HashMap<String, String> response = new HashMap<>();
-		response.put("message", "success");
+		response.put("message", result);
 		return ResponseEntity.ok(response);
 	}
 
