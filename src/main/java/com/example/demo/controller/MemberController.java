@@ -31,7 +31,8 @@ public class MemberController {
 	 * Response: {"message":"success"}
 	 */
 	@PostMapping("/register")
-	public ResponseEntity<Map<String, String>> register(@RequestBody Member member){
+	public ResponseEntity<Map<String, String>> register(
+			@RequestBody Member member){
 		
 		String result = memberService.register(member);
 		
@@ -39,5 +40,18 @@ public class MemberController {
 		response.put("message", result);
 		return ResponseEntity.ok(response);
 	}
+
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> login(
+			@RequestBody Map<String,String> body){
+		String account = body.get("account");
+		String passwd = body.get("passwd");
+		System.out.println(account + ":" + passwd);
+		
+		HashMap<String, Object> response = new HashMap<>();
+		return ResponseEntity.ok(response);
+	}
+	
+	
 
 }
