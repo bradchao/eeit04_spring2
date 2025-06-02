@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Member;
 import com.example.demo.service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api/members")
 public class MemberController {
@@ -65,6 +67,52 @@ public class MemberController {
 		
 		return ResponseEntity.ok(response);
 	}
+	
+	@PostMapping("/login3")
+	public ResponseEntity<Map<String, Object>> login3(
+			@RequestBody Map<String,String> body,
+			HttpSession session){
+		
+		String account = body.get("account");
+		String passwd = body.get("passwd");
+		
+		Member member = memberService.login3(account, passwd);
+		if (member != null) {
+			session.setAttribute("member", member);
+		}else {
+			//session.removeAttribute("member");
+			session.invalidate();
+		}
+		
+		HashMap<String, Object> response = new HashMap<>();
+		response.put("success", member!=null);
+		response.put("mesg", member!=null?"登入成功":"登入失敗");
+		
+		return ResponseEntity.ok(response);		
+	}
+	
+	@RequestMapping("/logout")
+	public ResponseEntity<Map<String, Object>> logout(HttpSession session) {
+		session.invalidate();
+		
+		HashMap<String, Object> response = new HashMap<>();
+		response.put("success", true);
+		response.put("mesg", "登出成功");
+		
+		return ResponseEntity.ok(response);		
+	}
+	
+	@RequestMapping("/status")
+	public ResponseEntity<Map<String, Object>> status(HttpSession session) {
+		Object member = session.getAttribute("member");
+		
+		HashMap<String, Object> response = new HashMap<>();
+		response.put("success", member != null);
+		
+		return ResponseEntity.ok(response);			
+	}
+	
+	
 	
 	@GetMapping("/test1")
 	public void test1() {

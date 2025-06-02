@@ -53,6 +53,16 @@ public class MemberService {
 		return false;
 	}	
 	
+	public Member login3(String account, String passwd) {
+		Member member = memberRepository.findByAccount(account).orElse(null);
+		if (member != null && BCrypt.checkpw(passwd, member.getPasswd())) {
+			member.setPasswd("");
+			return member;
+		}		
+		return null;
+	}
+	
+	
 	public void test1() {
 		long count = memberRepository.count();
 		System.out.println(count);
