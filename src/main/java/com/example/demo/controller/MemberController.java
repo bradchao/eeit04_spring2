@@ -40,7 +40,16 @@ public class MemberController {
 		response.put("message", result);
 		return ResponseEntity.ok(response);
 	}
-
+	/*
+	 * Request: {
+	 * 	account: brad,
+	 * 	passwd: 123456
+	 * }
+	 * Response: {
+	 * 	success: true/false,
+	 * 	mesg: "xxxxx"
+	 * }
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(
 			@RequestBody Map<String,String> body){
@@ -48,7 +57,12 @@ public class MemberController {
 		String passwd = body.get("passwd");
 		System.out.println(account + ":" + passwd);
 		
+		boolean valid = memberService.login(account, passwd);
+		
 		HashMap<String, Object> response = new HashMap<>();
+		response.put("success", valid);
+		response.put("mesg", valid?"登入成功":"登入失敗");
+		
 		return ResponseEntity.ok(response);
 	}
 	
