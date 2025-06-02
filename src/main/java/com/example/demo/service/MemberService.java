@@ -38,6 +38,17 @@ public class MemberService {
 	}
 	
 	public boolean login2(String account, String passwd) {
+		System.out.println("login2");
+		Member member = new Member();
+		member.setAccount(account);
+		
+		Example<Member> ex = Example.of(member);
+		if (memberRepository.exists(ex)) {
+			List<Member> members = memberRepository.findAll(ex);
+			if (BCrypt.checkpw(passwd, members.get(0).getPasswd())) {
+				return true;
+			}
+		}
 		
 		return false;
 	}	

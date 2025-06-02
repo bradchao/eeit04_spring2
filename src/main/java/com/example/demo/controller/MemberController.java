@@ -57,7 +57,7 @@ public class MemberController {
 		String passwd = body.get("passwd");
 		System.out.println(account + ":" + passwd);
 		
-		boolean valid = memberService.login(account, passwd);
+		boolean valid = memberService.login2(account, passwd);
 		
 		HashMap<String, Object> response = new HashMap<>();
 		response.put("success", valid);
