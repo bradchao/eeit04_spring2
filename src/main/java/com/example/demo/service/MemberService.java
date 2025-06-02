@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Member;
@@ -36,6 +37,11 @@ public class MemberService {
 		return false;
 	}
 	
+	public boolean login2(String account, String passwd) {
+		
+		return false;
+	}	
+	
 	public void test1() {
 		long count = memberRepository.count();
 		System.out.println(count);
@@ -56,6 +62,22 @@ public class MemberService {
 		List<Member> members = memberRepository.findAll();
 		for (Member m : members) {
 			System.out.println(m.getAccount() + ":" + m.getRealname());
+		}
+		System.out.println("-----");
+		Member member3 = new Member();
+		member3.setRealname("不來的1");
+		member3.setAccount("brad");
+		
+		Example<Member> ex = Example.of(member3);
+		boolean isExist = memberRepository.exists(ex);
+		System.out.println(isExist);
+		if (isExist) {
+			List<Member> members2 = memberRepository.findAll(ex);
+			for (Member m : members2) {
+				System.out.println(m.getAccount() + ":" + m.getRealname());
+			}
+		}else {
+			System.out.println("XXXXX");
 		}
 		
 		
