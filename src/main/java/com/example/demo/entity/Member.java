@@ -23,6 +23,9 @@ public class Member {
 	private String realname;
 	private byte[] icon;
 	
+	public Member() {
+		System.out.println("Member()");
+	}
 	
 	public Long getId() {
 		return id;

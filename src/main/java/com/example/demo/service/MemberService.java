@@ -12,6 +12,10 @@ import com.example.demo.utils.BCrypt;
 
 @Service
 public class MemberService {
+	
+	public MemberService() {
+		System.out.println("MemberService()");
+	}
 
 	@Autowired
 	private MemberRepository memberRepository;
