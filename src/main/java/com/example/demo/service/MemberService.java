@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,33 @@ public class MemberService {
 		}
 		return false;
 	}
+	
+	public void test1() {
+		long count = memberRepository.count();
+		System.out.println(count);
+		memberRepository.deleteById((long)2);
+		
+		Member member = new Member();
+		member.setId((long)4);
+		member.setAccount("tiger");
+		memberRepository.delete(member);
+		
+		System.out.println(memberRepository.existsById((long)4));
+		
+		Member member2 = memberRepository.findById((long)5).orElse(null);
+		System.out.println(member2.getAccount() + ":" + member2.getRealname());
+		member2.setRealname("Tiger");
+		memberRepository.save(member2);
+		
+		List<Member> members = memberRepository.findAll();
+		for (Member m : members) {
+			System.out.println(m.getAccount() + ":" + m.getRealname());
+		}
+		
+		
+		
+	}
+	
 	
 	
 	

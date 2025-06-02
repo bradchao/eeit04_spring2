@@ -66,6 +66,10 @@ public class MemberController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@GetMapping("/test1")
+	public void test1() {
+		memberService.test1();
+	}
 	
 
 }
