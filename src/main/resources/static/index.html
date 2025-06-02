@@ -5,6 +5,22 @@
 <div id="welcome"></div>
 <img id="icon" />
 <button id="logout">Logout</button>
+<hr />
+<table id="hotelTable" border="1" width="100%">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Tel</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+
+
+
+
 <script>
 	$(document).ready(function(){
 		// 檢查 session
@@ -38,7 +54,38 @@
 			
 		});
 		
+		function loadHotel(){
+			$.ajax({
+				url: "/api/hotels/v1?page=2&size=7",
+				method : "GET",
+				dataType: "json"
+			}).done(data => {
+				console.log(data);
+				let tbody = $("#hotelTable tbody").empty();
+				data.content.forEach(hotel => {
+					tbody.append(`
+						<tr>
+							<td>${hotel.id}</td>
+							<td>${hotel.name}</td>
+							<td>${hotel.addr}</td>
+							<td>${hotel.tel}</td>
+						</tr>
+					`);
+				});
+				
+				
+			});
+		}
+		
+		
+		loadHotel();
+		
 		
 		
 	});
+	
+	
+	
+	
+	
 </script>
