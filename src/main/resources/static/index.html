@@ -6,6 +6,10 @@
 <img id="icon" />
 <button id="logout">Logout</button>
 <hr />
+<button id="prev">Prev</button>
+<span id="page">1</span>
+<button id="next">Next</button>
+<hr />
 <table id="hotelTable" border="1" width="100%">
 	<thead>
 		<tr>
@@ -54,9 +58,11 @@
 			
 		});
 		
-		function loadHotel(){
+		let nowPage = 0;
+		let totalPage = 0;
+		function loadHotel(page, size){
 			$.ajax({
-				url: "/api/hotels/v1?page=2&size=7",
+				url: `/api/hotels/v1?page=${page}&size=${size}`,
 				method : "GET",
 				dataType: "json"
 			}).done(data => {
@@ -73,12 +79,26 @@
 					`);
 				});
 				
+				nowPage = data.number;
+				totalPage = data.totalPages;
+				$("#page").text(`${nowPage + 1} / ${data.totalPages}`);
+				
+				
 				
 			});
 		}
+
+		$("#prev").click(() => {
+			console.log("debug1:" + nowPage);
+			if (nowPage > 0)loadHotel(nowPage-1, 10);
+		});
+		$("#next").click(() => {
+			console.log("debug2:" + nowPage + ":" + totalPage);
+			if (nowPage+1 < totalPage ) loadHotel(nowPage+1, 10);
+		});
 		
 		
-		loadHotel();
+		loadHotel(0,10);
 		
 		
 		
